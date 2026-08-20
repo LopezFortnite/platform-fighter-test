@@ -1,0 +1,19 @@
+# Render deployment.
+#
+# Render reads this file and configures the service itself, so there is nothing
+# to fill in by hand. One service runs the whole game: `server.js` serves the
+# page AND the multiplayer relay on the same address and the same port, which is
+# why no second host and no relay URL are needed.
+services:
+  - type: web
+    name: clash-rumble
+    runtime: node
+    plan: free
+    # `three` is the only dependency and the browser now loads it from vendor/,
+    # so this is close to a no-op — but it keeps a fresh clone honest.
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      # Render assigns the real port at runtime; server.js already reads it.
+      - key: NODE_VERSION
+        value: "20"

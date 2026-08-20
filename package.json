@@ -1,0 +1,15 @@
+{
+  "name": "clash-rumble-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "First playable prototype of Clash Rumble, a Clash-universe platform fighter.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "three": "^0.185.1"
+  }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clash Rumble — Playable Prototype</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: #0b0d14; color: #cfd6e6;
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    overflow: hidden;
+  }
+  #wrap { position: fixed; inset: 0; }
+  /* The 3D world renders underneath; the 2D canvas on top carries the HUD
+     (and the whole scene when the flat debug renderer is toggled on). */
+  canvas { position: absolute; inset: 0; display: block; }
+  #game3d { z-index: 0; }
+  #game { z-index: 1; }
+  #boot-error {
+    position: fixed; inset: 0; padding: 40px; background: #16060a; color: #ffb4b4;
+    font-family: Consolas, monospace; white-space: pre-wrap; overflow: auto; display: none; z-index: 99;
+  }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "/vendor/three.module.min.js"
+  }
+}
+</script>
+</head>
+<body>
+  <div id="wrap">
+    <canvas id="game3d"></canvas>
+    <canvas id="game"></canvas>
+  </div>
+  <pre id="boot-error"></pre>
+  <script>
+    // Surface module load errors on-screen; a blank canvas is a terrible debug experience.
+    window.addEventListener('error', (e) => {
+      const el = document.getElementById('boot-error');
+      el.style.display = 'block';
+      el.textContent += (e.message || e.error) + '\n' + (e.error && e.error.stack ? e.error.stack : '') + '\n\n';
+    });
+  </script>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
